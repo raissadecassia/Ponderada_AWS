@@ -17,11 +17,11 @@
   /* If input fields are populated, add a row to the DEPARTMENTS table. */
   $department_name = htmlentities($_POST['DEPARTMENT_NAME']);
   $manager_name = htmlentities($_POST['MANAGER_NAME']);
-  $established_date = htmlentities($_POST['ESTABLISHED_DATE']);
-  $budget = htmlentities($_POST['NUMBER_OF_EMPLOYEES']);
+  $department_start_date = htmlentities($_POST['DEPARTMENT_START_DATE']);
+  $number_of_employees = htmlentities($_POST['NUMBER_OF_EMPLOYEES']);
 
-  if (strlen($department_name) || strlen($manager_name) || strlen($established_date) || strlen($number_of_employees)) {
-    AddDepartment($connection, $department_name, $manager_name, $established_date, $number_of_employees);
+  if (strlen($department_name) || strlen($manager_name) || strlen($department_start_date) || strlen($number_of_employees)) {
+    AddDepartment($connection, $department_name, $manager_name, $department_start_date, $number_of_employees);
   }
 ?>
 
@@ -31,14 +31,14 @@
     <tr>
       <td>Department Name</td>
       <td>Manager Name</td>
-      <td>Established Date</td>
-      <td>Number of employees</td>
+      <td>Department Start Date</td>
+      <td>Number of Employees</td>
     </tr>
     <tr>
       <td><input type="text" name="DEPARTMENT_NAME" maxlength="50" size="30" /></td>
       <td><input type="text" name="MANAGER_NAME" maxlength="50" size="30" /></td>
-      <td><input type="date" name="ESTABLISHED_DATE" /></td>
-      <td><input type="number" step="1" name="BUDGET" /></td>
+      <td><input type="date" name="DEPARTMENT_START_DATE" /></td>
+      <td><input type="number" step="1" name="NUMBER_OF_EMPLOYEES" /></td>
       <td><input type="submit" value="Add Department" /></td>
     </tr>
   </table>
@@ -50,7 +50,7 @@
     <td>Department ID</td>
     <td>Department Name</td>
     <td>Manager Name</td>
-    <td>Established Date</td>
+    <td>Department Start Date</td>
     <td>Number of Employees</td>
   </tr>
 
@@ -86,13 +86,13 @@ while($query_data = mysqli_fetch_row($result)) {
 <?php
 
 /* Add a department to the table. */
-function AddDepartment($connection, $department_name, $manager_name, $established_date, $budget) {
+function AddDepartment($connection, $department_name, $manager_name, $department_start_date, $number_of_employees) {
    $dn = mysqli_real_escape_string($connection, $department_name);
    $mn = mysqli_real_escape_string($connection, $manager_name);
-   $ed = mysqli_real_escape_string($connection, $established_date);
-   $b = mysqli_real_escape_string($connection, $number_of_employees);
+   $ds = mysqli_real_escape_string($connection, $department_start_date);
+   $ne = mysqli_real_escape_string($connection, $number_of_employees);
 
-   $query = "INSERT INTO Departments (DepartmentName, ManagerName, EstablishedDate, NumberOfEmployees) VALUES ('$dn', '$mn', '$ed', '$b');";
+   $query = "INSERT INTO Departments (DepartmentName, ManagerName, DepartmentStartDate, NumberOfEmployees) VALUES ('$dn', '$mn', '$ds', '$ne');";
 
    if(!mysqli_query($connection, $query)) echo("<p>Error adding department data.</p>");
 }
@@ -105,7 +105,7 @@ function VerifyDepartmentsTable($connection, $dbName) {
          DepartmentID int(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
          DepartmentName VARCHAR(50) NOT NULL,
          ManagerName VARCHAR(50),
-         EstablishedDate DATE,
+         DepartmentStartDate DATE,
          NumberOfEmployees int
        )";
 
