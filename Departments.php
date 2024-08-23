@@ -56,7 +56,7 @@
 
 <?php
 
-$result = mysqli_query($connection, "SELECT * FROM Departments");
+$result = mysqli_query($connection, "SELECT * FROM DEPARTMENTS");
 
 while($query_data = mysqli_fetch_row($result)) {
   echo "<tr>";
@@ -92,16 +92,16 @@ function AddDepartment($connection, $department_name, $manager_name, $department
    $ds = mysqli_real_escape_string($connection, $department_start_date);
    $ne = mysqli_real_escape_string($connection, $number_of_employees);
 
-   $query = "INSERT INTO Departments (DepartmentName, ManagerName, DepartmentStartDate, NumberOfEmployees) VALUES ('$dn', '$mn', '$ds', '$ne');";
+   $query = "INSERT INTO DEPARTMENTS (DepartmentName, ManagerName, DepartmentStartDate, NumberOfEmployees) VALUES ('$dn', '$mn', '$ds', '$ne');";
 
    if(!mysqli_query($connection, $query)) echo("<p>Error adding department data.</p>");
 }
 
 /* Check whether the table exists and, if not, create it. */
 function VerifyDepartmentsTable($connection, $dbName) {
-  if(!TableExists("Departments", $connection, $dbName))
+  if(!TableExists("DEPARTMENTS", $connection, $dbName))
   {
-     $query = "CREATE TABLE Departments (
+     $query = "CREATE TABLE DEPARTMENTS (
          DepartmentID int(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
          DepartmentName VARCHAR(50) NOT NULL,
          ManagerName VARCHAR(50),
